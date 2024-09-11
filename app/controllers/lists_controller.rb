@@ -4,11 +4,13 @@ class ListsController < ApplicationController
   end
   
   def create
-    list = List.new(list_params)
+    @list = List.new(list_params)
+    if @list.save
+      redirect_to list_path(@list.id)
+    else
+      redirect_to new_list_path #renderではなくredirect_toだった場合
+    end
     
-    list.save
-    
-    redirect_to list_path(list.id)
   end
 
   def index
